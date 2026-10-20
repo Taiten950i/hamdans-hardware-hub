@@ -1,0 +1,835 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hamdan's Hardware Hub | Console Collecting & Softmod Showcase</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Tailwind Custom Configuration -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        cyberBg: '#0d0f12',
+                        cyberCard: '#151821',
+                        cyberCardHover: '#1c212d',
+                        cyberAccent: '#00f2fe',
+                        cyberPurple: '#7928ca',
+                        cyberNeon: '#10b981',
+                        cyberText: '#e2e8f0',
+                        cyberMuted: '#94a3b8'
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace']
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px rgba(0, 242, 254, 0.25)',
+                        'neon-purple': '0 0 20px rgba(121, 40, 202, 0.3)',
+                        'glass-glow': '0 8px 32px 0 rgba(0, 0, 0, 0.37)'
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Custom Scrollbar & Cyber Utilities */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0d0f12;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00f2fe;
+        }
+        
+        /* Glassmorphism Classes */
+        .glass-panel {
+            background: rgba(21, 24, 33, 0.75);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .glass-nav {
+            background: rgba(13, 15, 18, 0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        /* Ambient Glow Effect */
+        .glow-bg-cyan {
+            background: radial-gradient(circle at 50% 20%, rgba(0, 242, 254, 0.12) 0%, rgba(13, 15, 18, 0) 70%);
+        }
+        .glow-bg-purple {
+            background: radial-gradient(circle at 80% 60%, rgba(121, 40, 202, 0.12) 0%, rgba(13, 15, 18, 0) 70%);
+        }
+
+        /* Subtle Scanline Effect */
+        .scanlines {
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.25) 50%
+            ), linear-gradient(
+                90deg,
+                rgba(255, 0, 0, 0.03),
+                rgba(0, 255, 0, 0.01),
+                rgba(0, 0, 255, 0.03)
+            );
+            background-size: 100% 4px, 6px 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body class="bg-cyberBg text-cyberText font-sans selection:bg-cyberAccent selection:text-black min-h-screen flex flex-col relative overflow-x-hidden">
+
+    <!-- Subtle Background Ambient Lights -->
+    <div class="fixed inset-0 glow-bg-cyan pointer-events-none z-0"></div>
+    <div class="fixed inset-0 glow-bg-purple pointer-events-none z-0"></div>
+    <div class="fixed inset-0 scanlines opacity-30 pointer-events-none z-0"></div>
+
+    <!-- Navigation Header -->
+    <header class="fixed top-0 left-0 w-full z-40 glass-nav">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center space-x-3 group">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyberPurple to-cyberAccent p-[2px] transition-transform duration-300 group-hover:scale-105">
+                    <div class="w-full h-full bg-cyberBg rounded-[10px] flex items-center justify-center">
+                        <i class="fa-solid fa-microchip text-cyberAccent text-lg"></i>
+                    </div>
+                </div>
+                <div class="flex flex-col">
+                    <span class="font-extrabold text-lg sm:text-xl tracking-tight text-white group-hover:text-cyberAccent transition-colors">
+                        HAMDAN'S<span class="text-cyberAccent">HUB</span>
+                    </span>
+                    <span class="text-[10px] font-mono text-cyberMuted tracking-wider uppercase">TAITEN95 // UAE</span>
+                </div>
+            </a>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden md:flex items-center space-x-8 font-medium text-sm">
+                <a href="#vault" class="hover:text-cyberAccent transition-colors py-1 relative group">
+                    Console Vault
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-cyberAccent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#timeline" class="hover:text-cyberAccent transition-colors py-1 relative group">
+                    Specs & Timeline
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-cyberAccent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+                <a href="#about" class="hover:text-cyberAccent transition-colors py-1 relative group">
+                    About Me
+                    <span class="absolute bottom-0 left-0 w-0 h-0.5 bg-cyberAccent transition-all duration-300 group-hover:w-full"></span>
+                </a>
+            </nav>
+
+            <!-- Status Indicator / Socials -->
+            <div class="hidden sm:flex items-center space-x-4">
+                <div class="inline-flex items-center px-3 py-1 rounded-full text-xs font-mono bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse mr-2"></span>
+                    SYSTEM ONLINE
+                </div>
+            </div>
+
+            <!-- Mobile Menu Toggle Button -->
+            <button id="mobileMenuBtn" aria-label="Toggle Navigation Menu" class="md:hidden text-cyberMuted hover:text-white focus:outline-none p-2">
+                <i class="fa-solid fa-bars text-xl" id="menuIcon"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobileMenu" class="hidden md:hidden glass-panel border-t border-white/5 px-4 pt-3 pb-6 space-y-3">
+            <a href="#vault" class="mobile-link block py-2 px-3 rounded-lg hover:bg-white/5 hover:text-cyberAccent font-medium text-sm">Console Vault</a>
+            <a href="#timeline" class="mobile-link block py-2 px-3 rounded-lg hover:bg-white/5 hover:text-cyberAccent font-medium text-sm">Specs & Timeline</a>
+            <a href="#about" class="mobile-link block py-2 px-3 rounded-lg hover:bg-white/5 hover:text-cyberAccent font-medium text-sm">About Me</a>
+        </div>
+    </header>
+
+    <main class="flex-grow pt-28 z-10">
+
+        <!-- HERO SECTION -->
+        <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-12 pb-20 text-center lg:text-left relative">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                
+                <div class="lg:col-span-7 space-y-6">
+                    
+                    <!-- Tag / Pill -->
+                    <div class="inline-flex items-center space-x-2 px-3 py-1.5 rounded-full text-xs font-mono glass-panel border border-cyberAccent/30 text-cyberAccent">
+                        <i class="fa-solid fa-gamepad"></i>
+                        <span>HARDWARE COLLECTOR & SOFTMOD ENTHUSIAST</span>
+                    </div>
+
+                    <!-- Main Title -->
+                    <h1 class="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-white leading-none">
+                        HAMDAN’S <br class="hidden sm:inline">
+                        <span class="bg-gradient-to-r from-cyberAccent via-blue-400 to-cyberPurple bg-clip-text text-transparent">
+                            HARDWARE HUB
+                        </span>
+                    </h1>
+
+                    <!-- Subtitle -->
+                    <p class="text-base sm:text-lg text-cyberMuted max-w-2xl mx-auto lg:mx-0 font-normal leading-relaxed">
+                        Collecting Consoles, Installing Custom Firmware, and Unlocking True Potential.
+                    </p>
+
+                    <!-- Buttons -->
+                    <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-4">
+                        <a href="#vault" class="w-full sm:w-auto px-8 py-4 rounded-xl bg-gradient-to-r from-cyberAccent to-blue-600 text-black font-bold text-sm hover:shadow-neon-cyan transition-all duration-300 transform hover:-translate-y-0.5 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-box-archive"></i>
+                            <span>Explore the Collection</span>
+                        </a>
+
+                        <a href="#about" class="w-full sm:w-auto px-8 py-4 rounded-xl glass-panel hover:bg-cyberCardHover text-white font-medium text-sm border border-white/10 hover:border-cyberAccent/50 transition-all duration-300 flex items-center justify-center space-x-2">
+                            <i class="fa-solid fa-user-astronaut"></i>
+                            <span>About Me</span>
+                        </a>
+                    </div>
+
+                    <!-- Quick Metrics -->
+                    <div class="pt-8 grid grid-cols-3 gap-4 border-t border-white/10 max-w-md mx-auto lg:mx-0">
+                        <div>
+                            <div class="text-2xl font-mono font-bold text-white">5+</div>
+                            <div class="text-xs text-cyberMuted uppercase font-mono">Consoles Vaulted</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-mono font-bold text-cyberAccent">100%</div>
+                            <div class="text-xs text-cyberMuted uppercase font-mono">Softmods Optimized</div>
+                        </div>
+                        <div>
+                            <div class="text-2xl font-mono font-bold text-cyberPurple">CFW</div>
+                            <div class="text-xs text-cyberMuted uppercase font-mono">Focused Setup</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- Hero Graphic Display -->
+                <div class="lg:col-span-5 flex justify-center">
+                    <div class="relative w-full max-w-md aspect-square rounded-3xl glass-panel p-6 border border-white/10 shadow-glass-glow flex flex-col justify-between overflow-hidden group">
+                        
+                        <!-- Glowing Circuit Pattern Background -->
+                        <div class="absolute inset-0 bg-gradient-to-br from-cyberAccent/10 via-transparent to-cyberPurple/20 opacity-60"></div>
+                        
+                        <!-- Card Top Bar -->
+                        <div class="flex items-center justify-between z-10">
+                            <div class="flex items-center space-x-2">
+                                <span class="w-3 h-3 rounded-full bg-red-500/80"></span>
+                                <span class="w-3 h-3 rounded-full bg-yellow-500/80"></span>
+                                <span class="w-3 h-3 rounded-full bg-green-500/80"></span>
+                            </div>
+                            <span class="text-xs font-mono text-cyberMuted">WORKBENCH_ACTIVE</span>
+                        </div>
+
+                        <!-- Center Tech Graphic -->
+                        <div class="my-auto text-center space-y-4 z-10 py-6">
+                            <div class="relative inline-block">
+                                <i class="fa-solid fa-floppy-disk text-7xl text-cyberAccent animate-pulse"></i>
+                                <div class="absolute -top-2 -right-2 bg-cyberPurple text-white text-[10px] font-mono px-2 py-0.5 rounded-full font-bold">
+                                    v4.0 CFW
+                                </div>
+                            </div>
+                            <h3 class="text-xl font-bold text-white tracking-wide">SYSTEM ARCHIVE</h3>
+                            <p class="text-xs font-mono text-cyberMuted px-4">
+                                Custom Firmware • Homebrew Apps • Legacy Software Preservations
+                            </p>
+                        </div>
+
+                        <!-- Card Bottom Bar -->
+                        <div class="p-3 rounded-xl bg-black/40 border border-white/5 font-mono text-xs text-cyberMuted flex items-center justify-between z-10">
+                            <span>OPERATOR: <strong class="text-white">Taiten95</strong></span>
+                            <span class="text-emerald-400 font-bold">ONLINE</span>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 1: INTERACTIVE CONSOLE VAULT & SHOWCASE -->
+        <section id="vault" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            
+            <!-- Section Header -->
+            <div class="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
+                <div>
+                    <div class="flex items-center space-x-2 text-cyberAccent text-xs font-mono uppercase tracking-widest mb-1">
+                        <i class="fa-solid fa-terminal"></i>
+                        <span>Hardware Vault</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Consoles & Devices</h2>
+                </div>
+
+                <!-- Filter Tab Buttons -->
+                <div class="flex flex-wrap gap-2 p-1.5 rounded-xl glass-panel border border-white/10" id="filterTabs">
+                    <button data-filter="all" class="filter-btn active px-4 py-2 rounded-lg text-xs font-mono font-semibold transition-all duration-300 bg-cyberAccent text-black shadow-neon-cyan">
+                        ALL
+                    </button>
+                    <button data-filter="handheld" class="filter-btn px-4 py-2 rounded-lg text-xs font-mono font-semibold text-cyberMuted hover:text-white transition-all duration-300">
+                        HANDHELDS
+                    </button>
+                    <button data-filter="home" class="filter-btn px-4 py-2 rounded-lg text-xs font-mono font-semibold text-cyberMuted hover:text-white transition-all duration-300">
+                        HOME CONSOLES
+                    </button>
+                    <button data-filter="retro" class="filter-btn px-4 py-2 rounded-lg text-xs font-mono font-semibold text-cyberMuted hover:text-white transition-all duration-300">
+                        RETRO / CLASSIC
+                    </button>
+                </div>
+            </div>
+
+            <!-- Console Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6" id="consoleGrid">
+                
+                <!-- Card 1: Nintendo 3DS XL -->
+                <div class="console-card glass-panel rounded-2xl p-6 border border-white/10 hover:border-cyberAccent/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer" data-category="handheld retro" onclick="openModal('3ds')">
+                    <div>
+                        <!-- Header / Status Tag -->
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                                Status: Fully Unlocked (CFW)
+                            </span>
+                            <i class="fa-solid fa-gamepad text-cyberMuted group-hover:text-cyberAccent transition-colors"></i>
+                        </div>
+
+                        <!-- Title & Category -->
+                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-cyberAccent transition-colors">Nintendo 3DS XL</h3>
+                        <p class="text-xs font-mono text-cyberMuted mb-4">HANDHELD • DUAL SCREEN ARCHITECTURE</p>
+
+                        <!-- Brief Description -->
+                        <p class="text-xs text-cyberMuted line-clamp-3 mb-6">
+                            Custom Luma3DS CFW, Pretendo Server Switcher, custom themes, forwarders, and complete retro catalog preservation.
+                        </p>
+                    </div>
+
+                    <!-- Specs Footer -->
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                        <span class="text-cyberMuted"><i class="fa-solid fa-microchip mr-1"></i> Luma3DS v13+</span>
+                        <span class="text-cyberAccent font-semibold flex items-center">
+                            View Specs <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card 2: PlayStation 5 & PS4 -->
+                <div class="console-card glass-panel rounded-2xl p-6 border border-white/10 hover:border-cyberAccent/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer" data-category="home" onclick="openModal('ps5')">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-blue-500/10 border border-blue-500/30 text-blue-400">
+                                Status: In the Vault (Stock/PS Plus)
+                            </span>
+                            <i class="fa-brands fa-playstation text-cyberMuted group-hover:text-cyberAccent transition-colors"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-cyberAccent transition-colors">PlayStation 5 & PS4</h3>
+                        <p class="text-xs font-mono text-cyberMuted mb-4">HOME CONSOLE • MODERN GENERATION</p>
+
+                        <p class="text-xs text-cyberMuted line-clamp-3 mb-6">
+                            Digital & classic catalog center, PS Plus subscription hub, media library, and high-framerate graphics showcase.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                        <span class="text-cyberMuted"><i class="fa-solid fa-hard-drive mr-1"></i> High-Speed SSD</span>
+                        <span class="text-cyberAccent font-semibold flex items-center">
+                            View Specs <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card 3: Xbox 360 Slim -->
+                <div class="console-card glass-panel rounded-2xl p-6 border border-white/10 hover:border-cyberAccent/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer" data-category="home retro" onclick="openModal('xbox360')">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-purple-500/10 border border-purple-500/30 text-purple-400">
+                                Status: Active Softmod Project
+                            </span>
+                            <i class="fa-brands fa-xbox text-cyberMuted group-hover:text-cyberAccent transition-colors"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-cyberAccent transition-colors">Xbox 360 Slim</h3>
+                        <p class="text-xs font-mono text-cyberMuted mb-4">HOME CONSOLE • XENON ARCHITECTURE</p>
+
+                        <p class="text-xs text-cyberMuted line-clamp-3 mb-6">
+                            Aurora Custom Dashboard setup, GOD storage drive configurations, title updates archive, and classic 7th gen library.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                        <span class="text-cyberMuted"><i class="fa-solid fa-sliders mr-1"></i> Aurora Dash</span>
+                        <span class="text-cyberAccent font-semibold flex items-center">
+                            View Specs <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card 4: Nintendo Switch -->
+                <div class="console-card glass-panel rounded-2xl p-6 border border-white/10 hover:border-cyberAccent/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer" data-category="handheld home" onclick="openModal('switch')">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                                Status: Custom Firmware Setup
+                            </span>
+                            <i class="fa-solid fa-toggle-on text-cyberMuted group-hover:text-cyberAccent transition-colors"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-cyberAccent transition-colors">Nintendo Switch</h3>
+                        <p class="text-xs font-mono text-cyberMuted mb-4">HYBRID CONSOLE • TEGRA X1</p>
+
+                        <p class="text-xs text-cyberMuted line-clamp-3 mb-6">
+                            Atmosphère CFW ecosystem, Custom Homebrew Launcher, Tinfoil management, and multi-console RetroArch emulation.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                        <span class="text-cyberMuted"><i class="fa-solid fa-microchip mr-1"></i> Atmosphère</span>
+                        <span class="text-cyberAccent font-semibold flex items-center">
+                            View Specs <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+                <!-- Card 5: Custom iOS & Handheld Devices -->
+                <div class="console-card glass-panel rounded-2xl p-6 border border-white/10 hover:border-cyberAccent/50 transition-all duration-300 flex flex-col justify-between group cursor-pointer" data-category="handheld retro" onclick="openModal('ios')">
+                    <div>
+                        <div class="flex items-center justify-between mb-4">
+                            <span class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                                Status: Jailbroken / Legacy Preserved
+                            </span>
+                            <i class="fa-solid fa-mobile-screen-button text-cyberMuted group-hover:text-cyberAccent transition-colors"></i>
+                        </div>
+
+                        <h3 class="text-xl font-bold text-white mb-1 group-hover:text-cyberAccent transition-colors">Custom iOS & Handhelds</h3>
+                        <p class="text-xs font-mono text-cyberMuted mb-4">MOBILE / PORTABLE • VINTAGE TECH</p>
+
+                        <p class="text-xs text-cyberMuted line-clamp-3 mb-6">
+                            Legacy 32-bit iOS game preservation (iOS 6/7/10 jailbreaks), sideloaded emulators, and custom app environments.
+                        </p>
+                    </div>
+
+                    <div class="pt-4 border-t border-white/5 flex items-center justify-between text-xs font-mono">
+                        <span class="text-cyberMuted"><i class="fa-solid fa-unlock mr-1"></i> Jailbreak / Sideload</span>
+                        <span class="text-cyberAccent font-semibold flex items-center">
+                            View Specs <i class="fa-solid fa-arrow-right ml-1 text-[10px]"></i>
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 2: SOFTMODDING SPECS & TIMELINE -->
+        <section id="timeline" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="glass-panel rounded-3xl p-8 sm:p-12 border border-white/10 relative overflow-hidden">
+                
+                <!-- Background Accent Glow -->
+                <div class="absolute -right-20 -bottom-20 w-80 h-80 bg-cyberAccent/10 rounded-full blur-3xl pointer-events-none"></div>
+
+                <div class="mb-10">
+                    <div class="flex items-center space-x-2 text-cyberAccent text-xs font-mono uppercase tracking-widest mb-1">
+                        <i class="fa-solid fa-gears"></i>
+                        <span>System Configurations</span>
+                    </div>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold text-white">Softmodding & Setup Timeline</h2>
+                </div>
+
+                <!-- Timeline / Spec Cards Container -->
+                <div class="space-y-8 relative before:absolute before:inset-0 before:left-4 sm:before:left-1/2 before:-ml-px before:w-0.5 before:bg-white/10">
+                    
+                    <!-- Timeline Item 1 -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyberBg border-2 border-cyberAccent text-cyberAccent shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-mono text-xs font-bold">
+                            01
+                        </div>
+                        <div class="w-[calc(100%-2.5rem)] md:w-[calc(50%-2.5rem)] glass-panel p-5 rounded-2xl border border-white/10 hover:border-cyberAccent/40 transition-colors">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-mono text-cyberAccent">NINTENDO 3DS XL ECOSYSTEM</span>
+                                <span class="text-[10px] font-mono text-emerald-400 bg-emerald-500/10 px-2 py-0.5 rounded border border-emerald-500/20">OPERATIONAL</span>
+                            </div>
+                            <h4 class="text-base font-bold text-white mb-1">Luma3DS CFW & Pretendo Network Integration</h4>
+                            <p class="text-xs text-cyberMuted leading-relaxed">
+                                Complete boot9strap installation, SD card expanded storage, Pretendo Network configuration for revived online gameplay, and hShop/FBI payload integration.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 2 -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyberBg border-2 border-cyberPurple text-cyberPurple shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-mono text-xs font-bold">
+                            02
+                        </div>
+                        <div class="w-[calc(100%-2.5rem)] md:w-[calc(50%-2.5rem)] glass-panel p-5 rounded-2xl border border-white/10 hover:border-cyberPurple/40 transition-colors">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-mono text-cyberPurple">XBOX 360 DASHBOARD MODS</span>
+                                <span class="text-[10px] font-mono text-purple-400 bg-purple-500/10 px-2 py-0.5 rounded border border-purple-500/20">CONFIGURING</span>
+                            </div>
+                            <h4 class="text-base font-bold text-white mb-1">Aurora Dashboard & GOD Format Drives</h4>
+                            <p class="text-xs text-cyberMuted leading-relaxed">
+                                Setting up custom Linux-based Aurora dashboards, game extraction to Game-On-Demand (GOD) format, cover art scraping, and title update organization.
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Timeline Item 3 -->
+                    <div class="relative flex items-center justify-between md:justify-normal md:odd:flex-row-reverse group">
+                        <div class="flex items-center justify-center w-8 h-8 rounded-full bg-cyberBg border-2 border-blue-400 text-blue-400 shrink-0 md:order-1 md:group-odd:-translate-x-1/2 md:group-even:translate-x-1/2 z-10 font-mono text-xs font-bold">
+                            03
+                        </div>
+                        <div class="w-[calc(100%-2.5rem)] md:w-[calc(50%-2.5rem)] glass-panel p-5 rounded-2xl border border-white/10 hover:border-blue-400/40 transition-colors">
+                            <div class="flex items-center justify-between mb-2">
+                                <span class="text-xs font-mono text-blue-400">LEGACY IOS ARCHIVE</span>
+                                <span class="text-[10px] font-mono text-blue-400 bg-blue-500/10 px-2 py-0.5 rounded border border-blue-500/20">PRESERVED</span>
+                            </div>
+                            <h4 class="text-base font-bold text-white mb-1">32-Bit App Preservation & Sideloading</h4>
+                            <p class="text-xs text-cyberMuted leading-relaxed">
+                                Preserving classic iOS titles removed from the App Store using checkra1n/unc0ver jailbreaks, app dumping, and custom IPA sideload setups.
+                            </p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- SECTION 3: ABOUT ME SECTION -->
+        <section id="about" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
+            <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                <!-- Bio Visual Card -->
+                <div class="lg:col-span-5">
+                    <div class="glass-panel p-8 rounded-3xl border border-white/10 relative overflow-hidden text-center sm:text-left">
+                        <div class="w-24 h-24 mx-auto sm:mx-0 rounded-2xl bg-gradient-to-tr from-cyberAccent to-cyberPurple p-[2px] mb-6">
+                            <div class="w-full h-full bg-cyberCard rounded-[14px] flex items-center justify-center">
+                                <i class="fa-solid fa-user-gear text-4xl text-cyberAccent"></i>
+                            </div>
+                        </div>
+
+                        <h3 class="text-2xl font-extrabold text-white">Hamdan Almehairbi</h3>
+                        <p class="text-xs font-mono text-cyberAccent mb-4">ALIAS: TAITEN / TAITEN95</p>
+
+                        <div class="space-y-3 text-xs text-cyberMuted font-mono border-t border-white/10 pt-4">
+                            <div class="flex items-center justify-between">
+                                <span>LOCATION:</span>
+                                <span class="text-white">United Arab Emirates 🇦🇪</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>FOCUS:</span>
+                                <span class="text-white">Collecting & Softmodding</span>
+                            </div>
+                            <div class="flex items-center justify-between">
+                                <span>EXPERTISE:</span>
+                                <span class="text-white">CFW, Homebrew, OS Tweaks</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bio Detailed Text -->
+                <div class="lg:col-span-7 space-y-6">
+                    <div>
+                        <div class="flex items-center space-x-2 text-cyberAccent text-xs font-mono uppercase tracking-widest mb-1">
+                            <i class="fa-solid fa-address-card"></i>
+                            <span>Operator Profile</span>
+                        </div>
+                        <h2 class="text-3xl sm:text-4xl font-extrabold text-white">About Me</h2>
+                    </div>
+
+                    <p class="text-sm text-cyberMuted leading-relaxed">
+                        Welcome to <strong class="text-white">Hamdan’s Hardware Hub</strong>! My name is <strong class="text-white">Hamdan Almehairbi</strong> (known online as <strong class="text-cyberAccent">Taiten</strong> / <strong class="text-cyberAccent">Taiten95</strong>). I’m a tech enthusiast based in the United Arab Emirates with a huge passion for video game history, hardware collecting, and system software customization.
+                    </p>
+
+                    <p class="text-sm text-cyberMuted leading-relaxed">
+                        My primary focus is on **building a physical collection of gaming consoles and tech devices** and exploring their true capabilities. I specialize in **softmodding and jailbreaking**—using custom firmware (CFW), homebrew environments, and system software tweaks to bypass factory restrictions and unlock the full potential of every machine in my collection.
+                    </p>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                        <div class="p-4 rounded-xl glass-panel border border-white/5">
+                            <i class="fa-solid fa-boxes-stacked text-cyberAccent mb-2"></i>
+                            <h4 class="text-sm font-bold text-white mb-1">Console Collecting</h4>
+                            <p class="text-xs text-cyberMuted">Gathering handhelds and home consoles across generations to preserve gaming tech.</p>
+                        </div>
+
+                        <div class="p-4 rounded-xl glass-panel border border-white/5">
+                            <i class="fa-solid fa-code text-cyberPurple mb-2"></i>
+                            <h4 class="text-sm font-bold text-white mb-1">Softmodding & CFW</h4>
+                            <p class="text-xs text-cyberMuted">Configuring custom launchers, homebrew stores, emulators, and custom firmware.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER SECTION -->
+    <footer class="glass-nav border-t border-white/5 py-8 mt-12 z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4 text-center md:text-left">
+            
+            <div class="flex items-center space-x-3">
+                <span class="font-extrabold text-base text-white">
+                    HAMDAN'S<span class="text-cyberAccent">HUB</span>
+                </span>
+                <span class="text-xs font-mono text-cyberMuted">| Softmodding & Device Preservation</span>
+            </div>
+
+            <div class="text-xs font-mono text-cyberMuted">
+                © <span id="year"></span> Hamdan Almehairbi (Taiten95). All Rights Reserved.
+            </div>
+
+            <div class="flex items-center space-x-4 text-cyberMuted text-base">
+                <a href="#" aria-label="GitHub Profile" class="hover:text-cyberAccent transition-colors"><i class="fa-brands fa-github"></i></a>
+                <a href="#" aria-label="Discord Profile" class="hover:text-cyberAccent transition-colors"><i class="fa-brands fa-discord"></i></a>
+                <a href="#" aria-label="YouTube Channel" class="hover:text-cyberAccent transition-colors"><i class="fa-brands fa-youtube"></i></a>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- INTERACTIVE MODAL POPUP FOR CONSOLE DETAILS -->
+    <div id="consoleModal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/80 backdrop-blur-md transition-opacity duration-300">
+        <div class="glass-panel max-w-2xl w-full rounded-3xl p-6 sm:p-8 border border-white/10 relative shadow-2xl transform transition-transform scale-95" id="modalContainer">
+            
+            <!-- Close Button -->
+            <button onclick="closeModal()" aria-label="Close Modal" class="absolute top-6 right-6 text-cyberMuted hover:text-white transition-colors">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <!-- Modal Header Content -->
+            <div class="mb-6">
+                <span id="modalStatus" class="px-2.5 py-1 rounded-full text-[10px] font-mono font-bold bg-emerald-500/10 border border-emerald-500/30 text-emerald-400">
+                    STATUS
+                </span>
+                <h3 id="modalTitle" class="text-2xl sm:text-3xl font-extrabold text-white mt-3 mb-1">Console Title</h3>
+                <p id="modalCategory" class="text-xs font-mono text-cyberAccent">CATEGORY</p>
+            </div>
+
+            <!-- Modal Body Details -->
+            <div class="space-y-4 text-xs text-cyberMuted leading-relaxed">
+                <div>
+                    <h4 class="text-white font-mono font-bold uppercase text-xs mb-1">System Overview</h4>
+                    <p id="modalOverview">Overview description goes here...</p>
+                </div>
+
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
+                    <div class="p-3 rounded-xl bg-black/40 border border-white/5">
+                        <span class="text-[10px] font-mono text-cyberAccent block mb-1">SOFTWARE / CFW SETUP</span>
+                        <p id="modalSoftware" class="font-mono text-white text-xs">Software details...</p>
+                    </div>
+                    <div class="p-3 rounded-xl bg-black/40 border border-white/5">
+                        <span class="text-[10px] font-mono text-cyberPurple block mb-1">STORAGE & SPECS</span>
+                        <p id="modalStorage" class="font-mono text-white text-xs">Storage details...</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-white font-mono font-bold uppercase text-xs mb-1">Key Features & Mods</h4>
+                    <ul id="modalFeatures" class="list-disc list-inside space-y-1 text-cyberMuted font-sans">
+                        <!-- Dynamic list items populated via JavaScript -->
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Modal Footer -->
+            <div class="mt-8 pt-4 border-t border-white/10 flex justify-end">
+                <button onclick="closeModal()" class="px-6 py-2.5 rounded-xl bg-cyberAccent text-black font-bold text-xs hover:shadow-neon-cyan transition-all">
+                    Close Details
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- JavaScript Logic for Interactivity -->
+    <script>
+        // Update copyright year
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        // Console Modal Data Store
+        const consoleData = {
+            '3ds': {
+                title: 'Nintendo 3DS XL',
+                category: 'HANDHELD • DUAL SCREEN ARCHITECTURE',
+                status: 'Status: Fully Unlocked (CFW)',
+                statusClass: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
+                overview: 'The centerpiece of my portable softmod collection. Equipped with modern Luma3DS bootloader payloads, granting complete access to homebrew and custom themes.',
+                software: 'Luma3DS CFW v13+ / boot9strap',
+                storage: '128GB High-Speed MicroSD Card',
+                features: [
+                    'Pretendo Network switcher to bypass Nintendo network shutdown',
+                    'Custom dynamic visual themes & custom game forwarders',
+                    'FBI payload installer for homebrew management',
+                    'RetroArch full retro gaming emulation suite'
+                ]
+            },
+            'ps5': {
+                title: 'PlayStation 5 & PS4',
+                category: 'HOME CONSOLE • MODERN GENERATION',
+                status: 'Status: In the Vault (Stock/PS Plus)',
+                statusClass: 'bg-blue-500/10 border-blue-500/30 text-blue-400',
+                overview: 'My primary home gaming station used for modern gaming titles, media streaming, and access to the PlayStation digital archives.',
+                software: 'Official Firmware / PS Plus Ecosystem',
+                storage: 'Internal High-Speed NVMe SSD + Extended Drive',
+                features: [
+                    'Full high-framerate 4K modern gaming',
+                    'PS Plus Extra game catalog access',
+                    'Media Hub center for streaming & entertainment'
+                ]
+            },
+            'xbox360': {
+                title: 'Xbox 360 Slim',
+                category: 'HOME CONSOLE • XENON ARCHITECTURE',
+                status: 'Status: Active Softmod Project',
+                statusClass: 'bg-purple-500/10 border-purple-500/30 text-purple-400',
+                overview: 'Dedicated 7th-generation home console project focused on custom dashboard setup and game preservation.',
+                software: 'Aurora Custom Dashboard & XeInit',
+                storage: '500GB GOD (Game-On-Demand) Drive',
+                features: [
+                    'Aurora custom dashboard with automated cover art scraping',
+                    'Title update & DLC local management',
+                    'Custom fan profiles and thermal management tweaks'
+                ]
+            },
+            'switch': {
+                title: 'Nintendo Switch',
+                category: 'HYBRID CONSOLE • TEGRA X1',
+                status: 'Status: Custom Firmware Setup',
+                statusClass: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
+                overview: 'Hybrid home/handheld console modified to run custom payloads for game saves backing up, custom themes, and homebrew utilities.',
+                software: 'Atmosphere CFW + Hekate Bootloader',
+                storage: '256GB High-Speed MicroSD',
+                features: [
+                    'Atmosphère CFW payload with emuMMC setup',
+                    'Tinfoil homebrew & title installer',
+                    'RetroArch multi-system emulation engine'
+                ]
+            },
+            'ios': {
+                title: 'Custom iOS & Handheld Devices',
+                category: 'MOBILE / PORTABLE • VINTAGE TECH',
+                status: 'Status: Jailbroken / Legacy Preserved',
+                statusClass: 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400',
+                overview: 'A dedicated sub-collection of classic iOS hardware running jailbroken software to preserve 32-bit iOS games lost to App Store updates.',
+                software: 'checkra1n / unc0ver / Legacy Jailbreak',
+                storage: 'Internal Flash + Local Backup Archives',
+                features: [
+                    '32-bit legacy game preservation (iOS 6/7/10 setups)',
+                    'Sideloaded emulators (Delta, PPSSPP)',
+                    'Custom system UI tweaks and app backups'
+                ]
+            }
+        };
+
+        // Filter Functionality for Console Grid
+        const filterBtns = document.querySelectorAll('.filter-btn');
+        const consoleCards = document.querySelectorAll('.console-card');
+
+        filterBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                // Update Active Tab Styling
+                filterBtns.forEach(b => {
+                    b.classList.remove('active', 'bg-cyberAccent', 'text-black', 'shadow-neon-cyan');
+                    b.classList.add('text-cyberMuted');
+                });
+                btn.classList.add('active', 'bg-cyberAccent', 'text-black', 'shadow-neon-cyan');
+                btn.classList.remove('text-cyberMuted');
+
+                const filterValue = btn.getAttribute('data-filter');
+
+                consoleCards.forEach(card => {
+                    const categories = card.getAttribute('data-category');
+                    if (filterValue === 'all' || categories.includes(filterValue)) {
+                        card.style.display = 'flex';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Modal Popup Logic
+        const modal = document.getElementById('consoleModal');
+        const modalContainer = document.getElementById('modalContainer');
+
+        function openModal(consoleKey) {
+            const data = consoleData[consoleKey];
+            if (!data) return;
+
+            document.getElementById('modalTitle').textContent = data.title;
+            document.getElementById('modalCategory').textContent = data.category;
+            
+            const statusEl = document.getElementById('modalStatus');
+            statusEl.textContent = data.status;
+            statusEl.className = `px-2.5 py-1 rounded-full text-[10px] font-mono font-bold border ${data.statusClass}`;
+
+            document.getElementById('modalOverview').textContent = data.overview;
+            document.getElementById('modalSoftware').textContent = data.software;
+            document.getElementById('modalStorage').textContent = data.storage;
+
+            // Populate features list
+            const featuresUl = document.getElementById('modalFeatures');
+            featuresUl.innerHTML = '';
+            data.features.forEach(ft => {
+                const li = document.createElement('li');
+                li.textContent = ft;
+                featuresUl.appendChild(li);
+            });
+
+            // Show Modal
+            modal.classList.remove('hidden');
+            setTimeout(() => {
+                modalContainer.classList.remove('scale-95');
+                modalContainer.classList.add('scale-100');
+            }, 10);
+        }
+
+        function closeModal() {
+            modalContainer.classList.remove('scale-100');
+            modalContainer.classList.add('scale-95');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+            }, 200);
+        }
+
+        // Close modal when clicking on background backdrop
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                closeModal();
+            }
+        });
+
+        // Mobile Menu Logic
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const mobileMenu = document.getElementById('mobileMenu');
+        const mobileLinks = document.querySelectorAll('.mobile-link');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        mobileLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+    </script>
+</body>
+</html>
